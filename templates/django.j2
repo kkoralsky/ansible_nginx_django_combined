@@ -1,0 +1,32 @@
+server {
+    listen {{ http_port }};
+    server_name {{ domains|join(' ') }};
+
+    {% if ssl %}
+        ssl on;
+        ssl_certificate {{ cert_path }};
+        ssl_certificate_key {{ cert_key_path }};
+    {% endif %}
+
+    location / {
+        {% include proxy_tpl %}
+    }
+    {% if static_root|default(False) %}
+        location {{ static_base_path }} {
+            alias {{ static_root }};
+            expires 30d;
+            access_log  off;
+
+            location ~* \.(eot|woff|ttf|woff2|svg)$ {
+                add_header Access-Control-Allow-Origin *;
+            }
+        }
+    {% endif %}
+
+    {% if media_root|default(False) %}
+        location {{ media_base_path }} {
+            alias {{ media_root }};
+        }
+    {% endif %}
+
+}

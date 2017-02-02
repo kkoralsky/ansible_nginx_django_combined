@@ -1,0 +1,3 @@
+---
+fname: '{% if site_name is defined %}{{site_name}}{% else %}{{domain}}_django{% endif %}'
+proxy_bind: '{% if proxy_unix_sock %}unix:{{ proxy_unix_sock }}{% else %}{{ proxy_host }}:{{ proxy_port }}{% endif %}'
