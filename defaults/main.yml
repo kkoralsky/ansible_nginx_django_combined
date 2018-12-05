@@ -1,6 +1,6 @@
 ---
-media_base_path: /media
-static_base_path: /static
+media_base_path: /media/
+static_base_path: /static/
 
 proxy_type: http # or uwsgi
 
